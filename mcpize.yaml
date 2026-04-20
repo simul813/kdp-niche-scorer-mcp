@@ -1,0 +1,19 @@
+version: 1
+runtime: python
+entry: src/kdp_niche_scorer_mcp/server.py
+
+build:
+  install: uv sync --frozen --no-dev
+  command: uv run python -m compileall -q src
+
+startCommand:
+  type: http
+  command: .venv/bin/python -m kdp_niche_scorer_mcp.server
+
+secrets:
+  - name: RAPIDAPI_KEY
+    description: "RapidAPI key for the Real-Time Amazon Data API. Free tier: 100 req/mo. Get one at rapidapi.com/letscrape-6bRBa3QguO5/api/real-time-amazon-data"
+    required: true
+
+configSchema:
+  source: code
