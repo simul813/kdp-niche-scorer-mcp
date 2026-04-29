@@ -1,0 +1,15 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    type: object
+    required:
+      - rapidApiKey
+    properties:
+      rapidApiKey:
+        type: string
+        description: "RapidAPI key for the Real-Time Amazon Data API. Free tier: 100 req/mo."
+  commandFunction:
+    |-
+    (config) => ({ command: 'uv', args: ['run', 'kdp-niche-scorer-mcp'], env: { RAPIDAPI_KEY: config.rapidApiKey } })
