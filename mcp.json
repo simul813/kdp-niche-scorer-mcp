@@ -1,0 +1,78 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schema/mcp-server-manifest.json",
+  "name": "kdp-niche-scorer-mcp",
+  "displayName": "KDP Niche Scorer",
+  "version": "1.0.0",
+  "description": "Score Amazon Kindle Direct Publishing (KDP) niches using real-time Amazon search data. Feed a keyword, get demand score (0-100), competition analysis, BSR ranges, pricing data, and top-competitor breakdown. Built for AI agents doing market research for self-publishing.",
+  "vendor": {
+    "name": "KDP Intelligence",
+    "url": "https://kdp-intelligence.vercel.app"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/simul813/kdp-niche-scorer-mcp"
+  },
+  "categories": ["research", "ecommerce", "data"],
+  "tags": ["kdp", "kindle", "amazon", "publishing", "niche-research", "book-market"],
+  "transport": {
+    "stdio": {
+      "command": "uvx",
+      "args": ["kdp-niche-scorer-mcp"],
+      "env": {
+        "RAPIDAPI_KEY": "${RAPIDAPI_KEY}"
+      }
+    }
+  },
+  "tools": [
+    {
+      "name": "score_niche",
+      "description": "Score a KDP keyword niche on real Amazon Kindle search data. Returns a 0-100 demand/competition score, BSR ranges, estimated monthly revenue, and top competitor breakdown.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "keyword": {
+            "type": "string",
+            "description": "KDP keyword to analyze (e.g. 'low content journal', 'tarot for beginners')"
+          },
+          "marketplace": {
+            "type": "string",
+            "description": "Amazon country code: US, UK, DE, CA, AU (default US)",
+            "default": "US"
+          },
+          "royalty_mode": {
+            "type": "string",
+            "description": "Royalty calculation mode: 'kindle' (70%, default) or 'paperback' (60% minus print cost)",
+            "default": "kindle"
+          }
+        },
+        "required": ["keyword"]
+      }
+    },
+    {
+      "name": "get_top_competitors",
+      "description": "Get top Kindle competitor books for a keyword with BSR, price, review count, and estimated monthly revenue.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "keyword": {"type": "string"},
+          "marketplace": {"type": "string", "default": "US"},
+          "limit": {"type": "integer", "description": "Number of results (default 10)", "default": 10}
+        },
+        "required": ["keyword"]
+      }
+    },
+    {
+      "name": "estimate_sales_from_bsr",
+      "description": "Estimate monthly Kindle sales from an Amazon Best Sellers Rank (BSR) number.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "bsr": {"type": "integer", "description": "Amazon Best Sellers Rank"},
+          "marketplace": {"type": "string", "default": "US"}
+        },
+        "required": ["bsr"]
+      }
+    }
+  ]
+}
