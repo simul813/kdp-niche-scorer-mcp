@@ -1,0 +1,14 @@
+{
+  "$schema": "https://glama.ai/mcp/glama.schema.json",
+  "servers": [
+    {
+      "name": "KDP Niche Scorer",
+      "description": "Score Amazon Kindle Direct Publishing (KDP) niches using real-time Amazon search data. Feed a keyword, get a 0-100 demand score, competition analysis, BSR ranges, pricing data, and top-competitor monthly revenue estimates. Ideal for AI agents doing self-publishing market research.",
+      "tools": [
+        "score_niche",
+        "get_top_competitors",
+        "estimate_sales_from_bsr"
+      ]
+    }
+  ]
+}
